@@ -34,7 +34,7 @@ void ABaseCharacter::Tick(float DeltaTime)
 void ABaseCharacter::SetState(UCharacterState* ToState) //Be wary not to call this when state is null lol
 {
 	ActiveState->Leave();
-	ActiveState = ToState;
+	ActiveState = ToState; //Sets active states address to the new states address. thats how it does it right?
 	ActiveState->Enter();
 }
 
