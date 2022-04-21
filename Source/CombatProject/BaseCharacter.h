@@ -28,10 +28,15 @@ class COMBATPROJECT_API ABaseCharacter : public APawn
 	GENERATED_BODY()
 
 private:
+	UPROPERTY(EditAnywhere, Category = Combat)
+	USphereComponent* Hurtbox;
 
-	// Sets default values for this pawn's properties
+protected:
+
+	// Called when the game starts or when spawned
 	ABaseCharacter();
 	
+	virtual void BeginPlay() override;
 
 	class AttackingState : public BaseState
 	{
@@ -41,25 +46,14 @@ private:
 		virtual void Leave() override;
 		virtual void Tick(float DeltaTime) override;
 	};
-	
-
-
-	
-
-	UPROPERTY(EditAnywhere, Category = Combat)
-		USphereComponent* Hurtbox;
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 public:	
 
-	BaseState* ActiveState; //Watch this guy if he causes a memory leak. This pointer scares me.
-
-	AttackingState AttackState;
+	
 
 	
+	UPROPERTY(EditDefaultsOnly)
+		float WalkSpeed;
 
 
 	// Called every frame
@@ -68,7 +62,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	BaseState* ActiveState; //Watch this guy cause a memory leak. Keep an eye on this
 
+	AttackingState AttackState;
 	
 
 	

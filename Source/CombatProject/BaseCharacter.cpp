@@ -4,7 +4,6 @@
 #include "BaseCharacter.h"
 #include "Components/SphereComponent.h"
 #include "CombatProject/CharacterState.h"
-#include "CombatProject/StateIdle.h"
 #include "CombatProject/BaseState.h"
 
 // Sets default values
@@ -51,6 +50,7 @@ ABaseCharacter::AttackingState::AttackingState()
 
 void ABaseCharacter::AttackingState::Leave()
 {
+	//Despawn hitboxes
 }
 
 
