@@ -5,6 +5,7 @@
 #include "Components/SphereComponent.h"
 #include "CombatProject/CharacterState.h"
 #include "CombatProject/StateIdle.h"
+#include "CombatProject/BaseState.h"
 
 // Sets default values
 ABaseCharacter::ABaseCharacter()
@@ -13,6 +14,7 @@ ABaseCharacter::ABaseCharacter()
 
 	PrimaryActorTick.bCanEverTick = true;
 	Hurtbox = CreateDefaultSubobject<USphereComponent>(TEXT("Hurtbox"));
+	ActiveState = &AttackState;
 }
 
 // Called when the game starts or when spawned
@@ -29,14 +31,10 @@ void ABaseCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	ActiveState->Tick(DeltaTime);
+
 }
 
-void ABaseCharacter::SetState(UCharacterState* ToState) //Be wary not to call this when state is null lol
-{
-	ActiveState->Leave();
-	ActiveState = ToState; //Sets active states address to the new states address. thats how it does it right?
-	ActiveState->Enter();
-}
+
 
 // Called to bind functionality to input
 void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -45,6 +43,21 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 }
 
+#pragma region AttackState
+ABaseCharacter::AttackingState::AttackingState()
+{
+	
+}
+
+void ABaseCharacter::AttackingState::Leave()
+{
+}
 
 
 
+void ABaseCharacter::AttackingState::Tick(float DeltaTime)
+{
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.f, FColor::Purple, TEXT("From C++ Wooo"));
+}
+
+#pragma endregion

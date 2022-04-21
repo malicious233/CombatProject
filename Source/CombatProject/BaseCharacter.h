@@ -6,7 +6,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "CombatProject/CharacterState.h"
+#include "CombatProject/BaseState.h"
 #include "BaseCharacter.generated.h"
+
 
 UENUM()
 enum class EState : uint8
@@ -17,7 +20,6 @@ enum class EState : uint8
 };
 
 
-class UCharacterState;
 class USphereComponent;
 
 UCLASS()
@@ -25,9 +27,27 @@ class COMBATPROJECT_API ABaseCharacter : public APawn
 {
 	GENERATED_BODY()
 
-public:
+private:
+
 	// Sets default values for this pawn's properties
 	ABaseCharacter();
+	
+
+	class AttackingState : public BaseState
+	{
+	public:
+		AttackingState();
+
+		virtual void Leave() override;
+		virtual void Tick(float DeltaTime) override;
+	};
+	
+
+
+	
+
+	UPROPERTY(EditAnywhere, Category = Combat)
+		USphereComponent* Hurtbox;
 
 protected:
 	// Called when the game starts or when spawned
@@ -35,6 +55,9 @@ protected:
 
 public:	
 
+	BaseState* ActiveState; //Watch this guy if he causes a memory leak. This pointer scares me.
+
+	AttackingState AttackState;
 
 	
 
@@ -45,14 +68,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere, Category = Combat)
-	USphereComponent* Hurtbox;
-
-	UPROPERTY()
-	UCharacterState* ActiveState;
-
-	UFUNCTION()
-	void SetState(UCharacterState* ToState);
 
 	
 

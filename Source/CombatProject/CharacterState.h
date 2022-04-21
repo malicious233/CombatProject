@@ -3,12 +3,15 @@
 #include "CoreMinimal.h"
 #include "CharacterState.generated.h"
 
+class ABaseCharacter;
+
 UCLASS(Blueprintable)
 class UCharacterState : public UObject
 {
 	GENERATED_BODY()
-
-
+private:
+	UPROPERTY()
+	ABaseCharacter* owner;
 
 public:
 
