@@ -4,8 +4,6 @@ class BaseState
 {
 public:
 
-	BaseState();
-
 	UFUNCTION()
 		virtual void Tick(float DeltaTime);
 

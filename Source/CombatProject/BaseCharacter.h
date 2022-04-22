@@ -21,6 +21,7 @@ enum class EState : uint8
 
 
 class USphereComponent;
+class BaseState;
 
 UCLASS()
 class COMBATPROJECT_API ABaseCharacter : public APawn
@@ -38,14 +39,32 @@ protected:
 	
 	virtual void BeginPlay() override;
 
-	class AttackingState : public BaseState
+#pragma region States
+	virtual class BaseIdleState : public BaseState
 	{
 	public:
-		AttackingState();
+	};
+
+
+	virtual class BaseWalkState : public BaseState
+	{
+	public:
+	};
+
+	class BaseAirborneState : public BaseState
+	{
+	public:
+	};
+
+	class BaseAttackingState : public BaseState
+	{
+	public:
 
 		virtual void Leave() override;
 		virtual void Tick(float DeltaTime) override;
 	};
+#pragma endregion
+
 
 public:	
 
@@ -53,7 +72,14 @@ public:
 
 	
 	UPROPERTY(EditDefaultsOnly)
-		float WalkSpeed;
+	float WalkSpeed;
+
+	
+	UFUNCTION(BlueprintCallable)
+	//Sets state of the character via given enum.
+	virtual void SetState(EState ToState); 
+
+
 
 
 	// Called every frame
@@ -64,7 +90,7 @@ public:
 
 	BaseState* ActiveState; //Watch this guy cause a memory leak. Keep an eye on this
 
-	AttackingState AttackState;
+	
 	
 
 	

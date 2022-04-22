@@ -13,7 +13,6 @@ ABaseCharacter::ABaseCharacter()
 
 	PrimaryActorTick.bCanEverTick = true;
 	Hurtbox = CreateDefaultSubobject<USphereComponent>(TEXT("Hurtbox"));
-	ActiveState = &AttackState;
 }
 
 // Called when the game starts or when spawned
@@ -22,6 +21,11 @@ void ABaseCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	
+}
+
+
+void ABaseCharacter::SetState(EState ToState)
+{
 }
 
 // Called every frame
@@ -43,21 +47,33 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 }
 
 #pragma region AttackState
-ABaseCharacter::AttackingState::AttackingState()
-{
-	
-}
 
-void ABaseCharacter::AttackingState::Leave()
+void ABaseCharacter::BaseAttackingState::Leave()
 {
 	//Despawn hitboxes
 }
 
 
 
-void ABaseCharacter::AttackingState::Tick(float DeltaTime)
+void ABaseCharacter::BaseAttackingState::Tick(float DeltaTime)
 {
 	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.f, FColor::Purple, TEXT("From C++ Wooo"));
 }
+
+#pragma endregion
+
+#pragma region IdleState
+
+
+
+#pragma endregion
+
+#pragma region AerialState
+
+
+
+#pragma endregion
+
+#pragma region WalkState
 
 #pragma endregion
