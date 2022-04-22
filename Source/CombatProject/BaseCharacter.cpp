@@ -9,7 +9,6 @@
 // Sets default values
 ABaseCharacter::ABaseCharacter()
 {
-	ActiveState = NullState;
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 
 	PrimaryActorTick.bCanEverTick = true;
@@ -33,7 +32,7 @@ void ABaseCharacter::SetState(EState ToState)
 void ABaseCharacter::Tick(float DeltaTime)
 {
 	//Super::Tick(DeltaTime);
-	ActiveState.Tick(DeltaTime);
+	ActiveState->Tick(DeltaTime);
 
 }
 
@@ -57,7 +56,7 @@ void ABaseCharacter::BaseAttackingState::Leave()
 
 void ABaseCharacter::BaseAttackingState::Tick(float DeltaTime)
 {
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.f, FColor::Purple, TEXT("From C++ Wooo"));
+
 }
 
 #pragma endregion

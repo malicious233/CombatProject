@@ -88,8 +88,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	BaseState NullState;
-	BaseState& ActiveState = NullState; //Watch this guy cause a memory leak. Keep an eye on this
+	BaseState* ActiveState; //Watch this guy cause a memory leak. Keep an eye on this
 	
 	
 
