@@ -1,5 +1,5 @@
 #include "CombatProject/BaseState.h"
-
+ 
 
 void BaseState::Tick(float DeltaTime)
 {
