@@ -49,6 +49,7 @@ protected:
 	virtual class BaseWalkState : public BaseState
 	{
 	public:
+		virtual void Tick(float DeltaTime) override;
 	};
 
 	class BaseAirborneState : public BaseState
@@ -79,6 +80,12 @@ public:
 	//Sets state of the character via given enum.
 	virtual void SetState(EState ToState); 
 
+	UFUNCTION(BlueprintCallable)
+	void Move(FVector MoveVector);
+
+	UFUNCTION(BlueprintCallable)
+	virtual void Walk(FVector InputVector);
+
 
 
 
@@ -90,7 +97,9 @@ public:
 
 	BaseState* ActiveState; //Watch this guy cause a memory leak. Keep an eye on this
 	
-	
+	//Input
+	UPROPERTY()
+	FVector InputDirection = FVector::UpVector;
 
 	
 

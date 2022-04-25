@@ -28,6 +28,16 @@ void ABaseCharacter::SetState(EState ToState)
 {
 }
 
+void ABaseCharacter::Move(FVector MoveVector)
+{
+	AddActorWorldOffset(MoveVector);
+}
+
+void ABaseCharacter::Walk(FVector InputVector)
+{
+}
+
+
 // Called every frame
 void ABaseCharacter::Tick(float DeltaTime)
 {
@@ -76,3 +86,7 @@ void ABaseCharacter::BaseAttackingState::Tick(float DeltaTime)
 #pragma region WalkState
 
 #pragma endregion
+
+void ABaseCharacter::BaseWalkState::Tick(float DeltaTime)
+{
+}

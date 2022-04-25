@@ -4,6 +4,8 @@
 AFighterCharacter::AFighterCharacter()
 {
 	ActiveState = &IdleState;
+	IdleState.Fighter = this;
+	WalkState.Fighter = this;
 	
 }
 
@@ -21,7 +23,7 @@ void AFighterCharacter::Tick(float DeltaTime)
 void AFighterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	SetState(EState::IDLE);
+	SetState(EState::WALKING);
 	
 	
 }
@@ -43,11 +45,18 @@ void AFighterCharacter::SetState(EState ToState)
 	}
 }
 
+void AFighterCharacter::Walk(FVector InputVector)
+{
+	Move(InputVector * WalkSpeed);
+}
+
+
+
 
 #pragma region IdleState
 void AFighterCharacter::IdleStateClass::Enter()
 {
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Purple, TEXT("Entered Idle"));
+
 }
 
 void AFighterCharacter::IdleStateClass::Tick(float DeltaTime)
@@ -60,6 +69,15 @@ void AFighterCharacter::IdleStateClass::Tick(float DeltaTime)
 #pragma region WalkState
 void AFighterCharacter::WalkStateClass::Enter()
 {
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Purple, TEXT("Entered Walk"));
+
 }
+
+void AFighterCharacter::WalkStateClass::Tick(float DeltaTime)
+{
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.f, FColor::Purple, TEXT("Is Walking"));
+	Fighter->Walk(Fighter->InputDirection);
+}
+
+
+
 #pragma endregion
