@@ -17,6 +17,8 @@ enum class EState : uint8
 	NONE,
 	IDLE,
 	WALKING,
+	AIRBORNE,
+	ATTACKING,
 };
 
 
