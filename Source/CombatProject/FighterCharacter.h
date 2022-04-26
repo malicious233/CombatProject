@@ -10,11 +10,9 @@ class AFighterCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
 
-public:
-	
-	AFighterCharacter();
 
-	//States
+private:
+	///States////
 
 	class BaseFighterState
 	{
@@ -26,26 +24,46 @@ public:
 	{
 	public:
 		virtual void Enter() override;
+		virtual void Leave() override;
 		virtual void Tick(float DeltaTime) override;
-		
+
 	};
 
 	class WalkState : public BaseState, public BaseFighterState
 	{
 	public:
 		virtual void Enter() override;
+		virtual void Leave() override;
 		virtual void Tick(float DeltaTime) override;
 	};
 
 	IdleState IdleState;
 	WalkState WalkState;
-	//
+	///
+
+public:
+	
+	AFighterCharacter();
+
+	
+
+	///Overrides///
 
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void BeginPlay() override;
 
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
 	virtual void SetState(EState ToState) override;
 
+	///
+
+	///MiscFunctions///
+
+	void HandleWalk(float inputAxis);
+	void HandleStopWalk(float inputAxis);
+
+	///
 
 };
