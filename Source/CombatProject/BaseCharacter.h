@@ -41,39 +41,10 @@ protected:
 	
 	virtual void BeginPlay() override;
 
-#pragma region States
-	virtual class BaseIdleState : public BaseState
-	{
-	public:
-	};
-
-
-	virtual class BaseWalkState : public BaseState
-	{
-	public:
-		virtual void Tick(float DeltaTime) override;
-	};
-
-	class BaseAirborneState : public BaseState
-	{
-	public:
-	};
-
-	class BaseAttackingState : public BaseState
-	{
-	public:
-
-		virtual void Leave() override;
-		virtual void Tick(float DeltaTime) override;
-	};
-#pragma endregion
 
 
 public:	
 
-	
-
-	
 	UPROPERTY(EditDefaultsOnly)
 	float WalkSpeed;
 
@@ -81,15 +52,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	//Sets state of the character via given enum.
 	virtual void SetState(EState ToState); 
-
-	UFUNCTION(BlueprintCallable)
-	void Move(FVector MoveVector);
-
-	UFUNCTION(BlueprintCallable)
-	virtual void Walk(FVector InputVector);
-
-
-
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -99,9 +61,6 @@ public:
 
 	BaseState* ActiveState; //Watch this guy cause a memory leak. Keep an eye on this
 	
-	//Input
-	UPROPERTY()
-	FVector InputDirection = FVector::UpVector;
 
 	
 

@@ -22,7 +22,7 @@ public:
 		AFighterCharacter* Fighter;
 	};
 
-	class IdleStateClass : public BaseIdleState, public BaseFighterState
+	class IdleState : public BaseState, public BaseFighterState
 	{
 	public:
 		virtual void Enter() override;
@@ -30,15 +30,15 @@ public:
 		
 	};
 
-	class WalkStateClass : public BaseWalkState, public BaseFighterState
+	class WalkState : public BaseState, public BaseFighterState
 	{
 	public:
 		virtual void Enter() override;
 		virtual void Tick(float DeltaTime) override;
 	};
 
-	IdleStateClass IdleState;
-	WalkStateClass WalkState;
+	IdleState IdleState;
+	WalkState WalkState;
 	//
 
 	virtual void Tick(float DeltaTime) override;
@@ -47,6 +47,5 @@ public:
 
 	virtual void SetState(EState ToState) override;
 
-	virtual void Walk(FVector InputVector) override;
 
 };

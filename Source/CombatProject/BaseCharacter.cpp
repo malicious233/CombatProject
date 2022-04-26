@@ -28,14 +28,7 @@ void ABaseCharacter::SetState(EState ToState)
 {
 }
 
-void ABaseCharacter::Move(FVector MoveVector)
-{
-	AddActorWorldOffset(MoveVector);
-}
 
-void ABaseCharacter::Walk(FVector InputVector)
-{
-}
 
 
 // Called every frame
@@ -55,38 +48,3 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 }
 
-#pragma region AttackState
-
-void ABaseCharacter::BaseAttackingState::Leave()
-{
-	//Despawn hitboxes
-}
-
-
-
-void ABaseCharacter::BaseAttackingState::Tick(float DeltaTime)
-{
-
-}
-
-#pragma endregion
-
-#pragma region IdleState
-
-
-
-#pragma endregion
-
-#pragma region AerialState
-
-
-
-#pragma endregion
-
-#pragma region WalkState
-
-#pragma endregion
-
-void ABaseCharacter::BaseWalkState::Tick(float DeltaTime)
-{
-}
