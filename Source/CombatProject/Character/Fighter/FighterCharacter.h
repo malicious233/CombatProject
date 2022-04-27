@@ -1,9 +1,10 @@
 #pragma once
 
 #include "CombatProject/Character/BaseCharacter.h"
-#include "CombatProject/Character/BaseState.h"
+#include "CombatProject/Character/BaseState.h "
 #include "FighterCharacter.generated.h"
 
+class UStateInputBinderComponent;
 
 UCLASS()
 class AFighterCharacter : public ABaseCharacter
@@ -45,6 +46,9 @@ public:
 	
 	AFighterCharacter();
 
+	UPROPERTY(VisibleAnywhere)
+	UStateInputBinderComponent* InputBinderComp;
+
 	
 
 	///Overrides///
@@ -61,8 +65,7 @@ public:
 
 	///MiscFunctions///
 
-	void HandleWalk(float inputAxis);
-	void HandleStopWalk(float inputAxis);
+	void HandleWalk(float axisValue);
 
 	///
 
