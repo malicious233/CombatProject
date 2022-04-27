@@ -1,5 +1,6 @@
-#include "CombatProject/FighterCharacter.h"
-#include "CombatProject/BaseState.h"
+#include "FighterCharacter.h"
+#include "CombatProject/Character/BaseState.h"
+#include "CombatProject/Character/BaseCharacter.h"
 
 AFighterCharacter::AFighterCharacter()
 {

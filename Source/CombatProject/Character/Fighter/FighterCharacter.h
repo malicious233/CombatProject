@@ -1,9 +1,9 @@
 #pragma once
 
-#include "BaseCharacter.h"
+#include "CombatProject/Character/BaseCharacter.h"
+#include "CombatProject/Character/BaseState.h"
 #include "FighterCharacter.generated.h"
 
-class ABaseCharacter;
 
 UCLASS()
 class AFighterCharacter : public ABaseCharacter

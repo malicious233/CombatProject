@@ -6,8 +6,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "CombatProject/CharacterState.h"
-#include "CombatProject/BaseState.h"
 #include "BaseCharacter.generated.h"
 
 
