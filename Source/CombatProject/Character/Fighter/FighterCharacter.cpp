@@ -64,8 +64,10 @@ void AFighterCharacter::IdleState::Enter()
 {
 	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Purple, TEXT("Enter Idle"));
 
-	FInputAxisBinding bind = Fighter->InputComponent->BindAxis(TEXT("MovementAxis"), Fighter, &AFighterCharacter::HandleWalk);
-	Fighter->InputBinderComp->AddAxisBinding(bind);
+	Fighter->InputComponent->BindAxis(TEXT("MovementAxis"), Fighter, &AFighterCharacter::HandleWalk);
+	//Calling this without an initialized character controller touches a null pointer.
+	//Apparently the inputcomponent is initialized with the character controller
+	
 	
 }
 
@@ -79,7 +81,7 @@ void AFighterCharacter::IdleState::Leave()
 
 void AFighterCharacter::IdleState::Tick(float DeltaTime)
 {
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.f, FColor::Purple, TEXT("Is Idle"));
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, DeltaTime, FColor::Purple, TEXT("Is Idle"));
 	
 }
 
@@ -101,7 +103,7 @@ void AFighterCharacter::WalkState::Leave()
 
 void AFighterCharacter::WalkState::Tick(float DeltaTime)
 {
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.f, FColor::Purple, TEXT("Is Walking"));
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, DeltaTime, FColor::Purple, TEXT("Is Walking"));
 }
 
 

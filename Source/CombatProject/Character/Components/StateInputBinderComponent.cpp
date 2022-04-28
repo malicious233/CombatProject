@@ -16,7 +16,7 @@ void UStateInputBinderComponent::EmptyAxisBindings(UInputComponent& inputComp)
 			{
 				GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Purple, TEXT("Remov"));
 				//inputComp.AxisBindings[b].AxisDelegate.Unbind();
-				inputComp.AxisBindings.RemoveAt(b, 1, false);
+				inputComp.AxisBindings.RemoveAt(b, inputComp.AxisBindings.Num(), true);
 				b--;
 				continue;
 			}
