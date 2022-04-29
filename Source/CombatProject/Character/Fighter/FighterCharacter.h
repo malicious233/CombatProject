@@ -71,4 +71,10 @@ public:
 	void HandleStopWalk(float axisValue);
 	///
 
+private:
+	float InputAxis;
+
+public:
+	friend class BaseState; //Oh not in the double inheritance AAAAAAAAAAAAAA
+
 };

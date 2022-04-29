@@ -25,11 +25,10 @@ void UFGMovementComponent::BeginPlay()
 
 
 // Called every frame
-void UFGMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UFGMovementComponent::PhysicsTick(float DeltaTime)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
 	AActor* Owner = GetOwner();
+
 
 	//Gravity
 	FVector GravityForce = FVector::DownVector * Gravity;
@@ -67,7 +66,10 @@ void UFGMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 			break;
 		}
 	}
-	//
+
+	GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, FString::Printf(TEXT("Hello %s"), *Velocity.ToString()));
+
+	
 
 
 }
@@ -84,6 +86,7 @@ void UFGMovementComponent::AddImpulse(const FVector& impulse)
 
 void UFGMovementComponent::SetVelocity(const FVector& force)
 {
+	Velocity = force;
 }
 
 

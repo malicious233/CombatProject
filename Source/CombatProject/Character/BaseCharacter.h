@@ -43,8 +43,6 @@ protected:
 
 public:	
 
-	UPROPERTY(EditDefaultsOnly)
-	float WalkSpeed;
 
 	
 	UFUNCTION(BlueprintCallable)

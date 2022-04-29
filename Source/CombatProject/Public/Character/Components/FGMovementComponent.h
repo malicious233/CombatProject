@@ -21,11 +21,11 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
+
+
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-
-
+	UFUNCTION()
+	void PhysicsTick(float DeltaTime);
 
 	UFUNCTION(BlueprintCallable)
 	void AddForce(const FVector& force);
@@ -41,5 +41,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	float Gravity;
+
+
 		
 };

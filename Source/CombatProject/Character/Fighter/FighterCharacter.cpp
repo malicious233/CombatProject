@@ -84,6 +84,7 @@ void AFighterCharacter::IdleState::Leave()
 void AFighterCharacter::IdleState::Tick(float DeltaTime)
 {
 	GEngine->AddOnScreenDebugMessage(INDEX_NONE, DeltaTime, FColor::Purple, TEXT("Is Idle"));
+	Fighter->MoveComp->PhysicsTick(DeltaTime);
 	
 }
 
@@ -108,6 +109,11 @@ void AFighterCharacter::WalkState::Leave()
 void AFighterCharacter::WalkState::Tick(float DeltaTime)
 {
 	GEngine->AddOnScreenDebugMessage(INDEX_NONE, DeltaTime, FColor::Purple, TEXT("Is Walking"));
+
+	float walkForce = Fighter->InputAxis * 2000.f * DeltaTime;
+	Fighter->MoveComp->Velocity.X = walkForce;
+	
+	Fighter->MoveComp->PhysicsTick(DeltaTime);
 }
 
 
@@ -117,13 +123,25 @@ void AFighterCharacter::WalkState::Tick(float DeltaTime)
 void AFighterCharacter::HandleWalk(float axisValue)
 {
 	if (axisValue != 0)
+	{
+		InputAxis = axisValue;
 		SetState(EState::WALKING);
+		
+	}
+		
 }
 
 void AFighterCharacter::HandleStopWalk(float axisValue)
 {
 	if (axisValue == 0)
+	{
+		InputAxis = axisValue;
+		MoveComp->Velocity.X = 0;
 		SetState(EState::IDLE);
+	}
+		
 }
+
+
 
 
