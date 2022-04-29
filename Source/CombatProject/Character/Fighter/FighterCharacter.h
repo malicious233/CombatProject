@@ -5,6 +5,7 @@
 #include "FighterCharacter.generated.h"
 
 class UStateInputBinderComponent;
+class UFGMovementComponent;
 
 UCLASS()
 class AFighterCharacter : public ABaseCharacter
@@ -49,7 +50,8 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UStateInputBinderComponent* InputBinderComp;
 
-	
+	UPROPERTY(VisibleAnywhere)
+	UFGMovementComponent* MoveComp;
 
 	///Overrides///
 
@@ -66,7 +68,7 @@ public:
 	///MiscFunctions///
 
 	void HandleWalk(float axisValue);
-
+	void HandleStopWalk(float axisValue);
 	///
 
 };
