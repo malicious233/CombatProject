@@ -9,9 +9,12 @@ AFighterCharacter::AFighterCharacter()
 	InputBinderComp = CreateDefaultSubobject<UStateInputBinderComponent>(TEXT("StateInputBinderComponent"));
 	MoveComp = CreateDefaultSubobject<UFGMovementComponent>(TEXT("MovementComponent"));
 
-	ActiveState = &IdleState;
+	
 	IdleState.Fighter = this;
 	WalkState.Fighter = this;
+	AirborneState.Fighter = this;
+
+	ActiveState = &IdleState;
 	
 }
 
@@ -53,6 +56,11 @@ void AFighterCharacter::SetState(EState ToState)
 		ActiveState = &WalkState;
 		ActiveState->Enter();
 		break;
+	case EState::AIRBORNE:
+		ActiveState->Leave();
+		ActiveState = &AirborneState;
+		ActiveState->Enter();
+		break;
 	}
 }
 
@@ -66,6 +74,7 @@ void AFighterCharacter::IdleState::Enter()
 {
 	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Purple, TEXT("Enter Idle"));
 
+	//Subscribe walk input
 	FInputAxisBinding bind = Fighter->InputComponent->BindAxis(TEXT("MovementAxis"), Fighter, &AFighterCharacter::HandleWalk);
 	Fighter->InputBinderComp->AddAxisBinding(bind);
 
@@ -125,6 +134,30 @@ void AFighterCharacter::WalkState::Tick(float DeltaTime)
 
 #pragma endregion
 
+#pragma region AirborneState
+
+void AFighterCharacter::AirborneState::Enter()
+{
+}
+
+void AFighterCharacter::AirborneState::Leave()
+{
+}
+
+void AFighterCharacter::AirborneState::Tick(float DeltaTime)
+{
+	//Gravity
+	FVector GravityForce = FVector::DownVector * 120.f;
+	Fighter->MoveComp->AddForce(GravityForce);
+
+	Fighter->MoveComp->PhysicsTick(DeltaTime);
+
+	if (Fighter->MoveComp->IsGrounded) //Add an event that states can subscribe to whenever you collide with something.
+		Fighter->SetState(EState::IDLE);
+}
+
+#pragma endregion 
+
 void AFighterCharacter::HandleWalk(float axisValue)
 {
 	if (axisValue != 0)
@@ -153,6 +186,5 @@ void AFighterCharacter::HandleJump()
 	MoveComp->Velocity.Z = 200.f;
 	SetState(EState::AIRBORNE);
 }
-
 
 

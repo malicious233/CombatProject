@@ -31,12 +31,13 @@ void UFGMovementComponent::PhysicsTick(float DeltaTime)
 
 
 	//Gravity
-	FVector GravityForce = FVector::DownVector * Gravity;
-	AddForce(GravityForce);
+	//FVector GravityForce = FVector::DownVector * Gravity;
+	//AddForce(GravityForce);
 
 	//Handle collision
 	int Iterations = 10;
 	float RemainingTime = DeltaTime;
+	bool DidCollide = false;
 	while (RemainingTime > 0.f && ++Iterations << 10)
 	{
 		FHitResult Hit;
@@ -47,6 +48,7 @@ void UFGMovementComponent::PhysicsTick(float DeltaTime)
 		//If hit something
 		if (Hit.bBlockingHit)
 		{
+			DidCollide = true;
 			//Depenetrate
 			if (Hit.bStartPenetrating)
 			{
@@ -65,6 +67,14 @@ void UFGMovementComponent::PhysicsTick(float DeltaTime)
 
 			break;
 		}
+	}
+	if (DidCollide)
+	{
+		IsGrounded = true;
+	}
+	else
+	{
+		IsGrounded = false;
 	}
 
 	GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Green, FString::Printf(TEXT("Hello %s"), *Velocity.ToString()));

@@ -39,8 +39,17 @@ private:
 		virtual void Tick(float DeltaTime) override;
 	};
 
+	class AirborneState : public BaseState, public BaseFighterState
+	{
+	public: 
+		virtual void Enter() override;
+		virtual void Leave() override;
+		virtual void Tick(float DeltaTime) override;
+	};
+
 	IdleState IdleState;
 	WalkState WalkState;
+	AirborneState AirborneState;
 	///
 
 public:

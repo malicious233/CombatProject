@@ -36,6 +36,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetVelocity(const FVector& force);
 
+	UPROPERTY(BlueprintReadOnly)
+	bool IsGrounded;
+
 	UPROPERTY()
 	FVector Velocity = FVector::ZeroVector;
 
