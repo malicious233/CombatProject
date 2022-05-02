@@ -77,7 +77,7 @@ void AFighterCharacter::IdleState::Enter()
 
 void AFighterCharacter::IdleState::Leave()
 {
-	Fighter->InputBinderComp->EmptyAxisBindings(*(Fighter->InputComponent));
+	Fighter->InputBinderComp->EmptyAllBindings(*(Fighter->InputComponent));
 	
 }
 
@@ -95,15 +95,20 @@ void AFighterCharacter::WalkState::Enter()
 {
 	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Purple, TEXT("Enter Walk"));
 
+	//Subscribe Walk Input
 	FInputAxisBinding bind = Fighter->InputComponent->BindAxis(TEXT("MovementAxis"), Fighter, &AFighterCharacter::HandleStopWalk);
 	Fighter->InputBinderComp->AddAxisBinding(bind);
+
+	//Subscribe Jump Input
+	FInputActionBinding bind1 = Fighter->InputComponent->BindAction(TEXT("Jump"), IE_Pressed, Fighter, &AFighterCharacter::HandleJump);
+	Fighter->InputBinderComp->AddActionBinding(bind1);
 
 	//Look into how to make the lambda expression to make it prettier. I dont want 2000 random functions lying around. Or do I?
 }
 
 void AFighterCharacter::WalkState::Leave()
 {
-	Fighter->InputBinderComp->EmptyAxisBindings(*(Fighter->InputComponent));
+	Fighter->InputBinderComp->EmptyAllBindings(*(Fighter->InputComponent));
 }
 
 void AFighterCharacter::WalkState::Tick(float DeltaTime)
@@ -142,6 +147,12 @@ void AFighterCharacter::HandleStopWalk(float axisValue)
 		
 }
 
+
+void AFighterCharacter::HandleJump()
+{
+	MoveComp->Velocity.Z = 200.f;
+	SetState(EState::AIRBORNE);
+}
 
 
 

@@ -69,6 +69,7 @@ public:
 
 	void HandleWalk(float axisValue);
 	void HandleStopWalk(float axisValue);
+	void HandleJump();
 	///
 
 private:
