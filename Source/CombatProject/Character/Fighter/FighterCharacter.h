@@ -28,6 +28,8 @@ private:
 		virtual void Enter() override;
 		virtual void Leave() override;
 		virtual void Tick(float DeltaTime) override;
+		UFUNCTION(BlueprintCallable)
+		void Bruh();
 
 	};
 

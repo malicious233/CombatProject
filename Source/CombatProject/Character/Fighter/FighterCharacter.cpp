@@ -97,6 +97,10 @@ void AFighterCharacter::IdleState::Tick(float DeltaTime)
 	
 }
 
+void AFighterCharacter::IdleState::Bruh()
+{
+}
+
 #pragma endregion
 
 #pragma region WalkState
@@ -147,7 +151,7 @@ void AFighterCharacter::AirborneState::Leave()
 void AFighterCharacter::AirborneState::Tick(float DeltaTime)
 {
 	//Gravity
-	FVector GravityForce = FVector::DownVector * 120.f;
+	FVector GravityForce = FVector::DownVector * Fighter->MoveComp->WalkSpeed;
 	Fighter->MoveComp->AddForce(GravityForce);
 
 	Fighter->MoveComp->PhysicsTick(DeltaTime);

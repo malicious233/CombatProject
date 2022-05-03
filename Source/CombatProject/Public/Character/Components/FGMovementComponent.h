@@ -45,6 +45,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	float Gravity;
 
+	UPROPERTY(EditAnywhere)
+	float WalkSpeed = 300.f;
+
 
 		
 };
