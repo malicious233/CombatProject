@@ -31,6 +31,7 @@ void AFighterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//Remember to both initialize and set the Fighter reference to itself... I should make this into a function.
 	IdleState = NewObject<UFighterIdleState>(this, IdleStateClass);
 	IdleState->Fighter = this;
 
@@ -52,7 +53,7 @@ void AFighterCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 void AFighterCharacter::SetState(EState ToState)
 {
 
-	//This piece of shit is ugly. Improve it!
+	//This bit is ugly... I should add a function in BaseState for switching state which calls leave, BP leave and so on.
 	switch (ToState)
 	{
 	case EState::IDLE:
