@@ -3,6 +3,9 @@
 #include "CombatProject/Character/BaseCharacter.h"
 #include "CombatProject/Character/Components/StateInputBinderComponent.h"
 #include "Character/Components/FGMovementComponent.h"
+#include "CombatProject/Character/Fighter/FighterIdleState.h"
+#include "CombatProject/Character/Fighter/FighterWalkState.h"
+
 
 AFighterCharacter::AFighterCharacter()
 {
@@ -10,11 +13,6 @@ AFighterCharacter::AFighterCharacter()
 	MoveComp = CreateDefaultSubobject<UFGMovementComponent>(TEXT("MovementComponent"));
 
 	
-	IdleState.Fighter = this;
-	WalkState.Fighter = this;
-	AirborneState.Fighter = this;
-
-	ActiveState = &IdleState;
 	
 }
 
@@ -32,6 +30,15 @@ void AFighterCharacter::Tick(float DeltaTime)
 void AFighterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	IdleState = NewObject<UFighterIdleState>(this, IdleStateClass);
+	IdleState->Fighter = this;
+
+	WalkState = NewObject<UFighterWalkState>(this, WalkStateClass);
+	WalkState->Fighter = this;
+
+	ActiveState = IdleState;
+
 	SetState(EState::IDLE);
 	
 	
@@ -44,22 +51,23 @@ void AFighterCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 
 void AFighterCharacter::SetState(EState ToState)
 {
+
+	//This piece of shit is ugly. Improve it!
 	switch (ToState)
 	{
 	case EState::IDLE:
 		ActiveState->Leave();
-		ActiveState = &IdleState;
+		ActiveState->BPLeave();
+		ActiveState = IdleState;
 		ActiveState->Enter();
+		ActiveState->BPEnter();
 		break;
 	case EState::WALKING:
 		ActiveState->Leave();
-		ActiveState = &WalkState;
+		ActiveState->BPLeave();
+		ActiveState = WalkState;
 		ActiveState->Enter();
-		break;
-	case EState::AIRBORNE:
-		ActiveState->Leave();
-		ActiveState = &AirborneState;
-		ActiveState->Enter();
+		ActiveState->BPEnter();
 		break;
 	}
 }
@@ -70,69 +78,14 @@ void AFighterCharacter::SetState(EState ToState)
 
 
 #pragma region IdleState
-void AFighterCharacter::IdleState::Enter()
+
+void UFighterIdleState::Tick(float DeltaTime)
 {
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Purple, TEXT("Enter Idle"));
-
-	//Subscribe walk input
-	FInputAxisBinding bind = Fighter->InputComponent->BindAxis(TEXT("MovementAxis"), Fighter, &AFighterCharacter::HandleWalk);
-	Fighter->InputBinderComp->AddAxisBinding(bind);
-
-	//Calling this without an initialized character controller touches a null pointer.
-	//Apparently the inputcomponent is initialized with the character controller. Is it time for some defensive programming?
-	
+	Fighter->ActiveState->BPTick(DeltaTime);
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.f, FColor::Purple, TEXT("From C++ Wooo"));
 	
 }
 
-void AFighterCharacter::IdleState::Leave()
-{
-	Fighter->InputBinderComp->EmptyAllBindings(*(Fighter->InputComponent));
-	
-}
-
-void AFighterCharacter::IdleState::Tick(float DeltaTime)
-{
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, DeltaTime, FColor::Purple, TEXT("Is Idle"));
-	Fighter->MoveComp->PhysicsTick(DeltaTime);
-	
-}
-
-void AFighterCharacter::IdleState::Bruh()
-{
-}
-
-#pragma endregion
-
-#pragma region WalkState
-void AFighterCharacter::WalkState::Enter()
-{
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.f, FColor::Purple, TEXT("Enter Walk"));
-
-	//Subscribe Walk Input
-	FInputAxisBinding bind = Fighter->InputComponent->BindAxis(TEXT("MovementAxis"), Fighter, &AFighterCharacter::HandleStopWalk);
-	Fighter->InputBinderComp->AddAxisBinding(bind);
-
-	//Subscribe Jump Input
-	FInputActionBinding bind1 = Fighter->InputComponent->BindAction(TEXT("Jump"), IE_Pressed, Fighter, &AFighterCharacter::HandleJump);
-	Fighter->InputBinderComp->AddActionBinding(bind1);
-
-	//Look into how to make the lambda expression to make it prettier. I dont want 2000 random functions lying around. Or do I?
-}
-
-void AFighterCharacter::WalkState::Leave()
-{
-	Fighter->InputBinderComp->EmptyAllBindings(*(Fighter->InputComponent));
-}
-
-void AFighterCharacter::WalkState::Tick(float DeltaTime)
-{
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, DeltaTime, FColor::Purple, TEXT("Is Walking"));
-
-	float walkForce = Fighter->InputAxis * 2000.f * DeltaTime;
-	Fighter->MoveComp->Velocity.X = walkForce;
-	
-	Fighter->MoveComp->PhysicsTick(DeltaTime);
-}
 
 
 
@@ -140,25 +93,7 @@ void AFighterCharacter::WalkState::Tick(float DeltaTime)
 
 #pragma region AirborneState
 
-void AFighterCharacter::AirborneState::Enter()
-{
-}
 
-void AFighterCharacter::AirborneState::Leave()
-{
-}
-
-void AFighterCharacter::AirborneState::Tick(float DeltaTime)
-{
-	//Gravity
-	FVector GravityForce = FVector::DownVector * Fighter->MoveComp->WalkSpeed;
-	Fighter->MoveComp->AddForce(GravityForce);
-
-	Fighter->MoveComp->PhysicsTick(DeltaTime);
-
-	if (Fighter->MoveComp->IsGrounded) //Add an event that states can subscribe to whenever you collide with something.
-		Fighter->SetState(EState::IDLE);
-}
 
 #pragma endregion 
 

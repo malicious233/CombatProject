@@ -21,7 +21,7 @@ enum class EState : uint8
 
 
 class USphereComponent;
-class BaseState;
+class UBaseState;
 
 UCLASS()
 class COMBATPROJECT_API ABaseCharacter : public APawn
@@ -55,7 +55,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	BaseState* ActiveState; //Watch this guy cause a memory leak. Keep an eye on this
+	UPROPERTY()
+	UBaseState* ActiveState;
 	
 
 	

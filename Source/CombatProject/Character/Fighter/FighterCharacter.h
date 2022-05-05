@@ -6,6 +6,9 @@
 
 class UStateInputBinderComponent;
 class UFGMovementComponent;
+class UFighterIdleState;
+class UFighterWalkState;
+
 
 UCLASS()
 class AFighterCharacter : public ABaseCharacter
@@ -16,53 +19,14 @@ class AFighterCharacter : public ABaseCharacter
 private:
 	///States////
 
-	class BaseFighterState
-	{
-	public:
-		AFighterCharacter* Fighter;
-	};
-
-	class IdleState : public BaseState, public BaseFighterState
-	{
-	public:
-		virtual void Enter() override;
-		virtual void Leave() override;
-		virtual void Tick(float DeltaTime) override;
-		UFUNCTION(BlueprintCallable)
-		void Bruh();
-
-	};
-
-	class WalkState : public BaseState, public BaseFighterState
-	{
-	public:
-		virtual void Enter() override;
-		virtual void Leave() override;
-		virtual void Tick(float DeltaTime) override;
-	};
-
-	class AirborneState : public BaseState, public BaseFighterState
-	{
-	public: 
-		virtual void Enter() override;
-		virtual void Leave() override;
-		virtual void Tick(float DeltaTime) override;
-	};
-
-	IdleState IdleState;
-	WalkState WalkState;
-	AirborneState AirborneState;
+	
 	///
 
 public:
 	
 	AFighterCharacter();
 
-	UPROPERTY(VisibleAnywhere)
-	UStateInputBinderComponent* InputBinderComp;
-
-	UPROPERTY(VisibleAnywhere)
-	UFGMovementComponent* MoveComp;
+	
 
 	///Overrides///
 
@@ -83,10 +47,25 @@ public:
 	void HandleJump();
 	///
 
+	UPROPERTY(VisibleAnywhere)
+		UStateInputBinderComponent* InputBinderComp;
+
+	UPROPERTY(VisibleAnywhere)
+		UFGMovementComponent* MoveComp;
+
+	///States
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<UFighterIdleState> IdleStateClass;
+	UPROPERTY()
+		UFighterIdleState* IdleState;
+
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<UFighterWalkState> WalkStateClass;
+	UPROPERTY()
+		UFighterWalkState* WalkState;
+	
+
 private:
 	float InputAxis;
-
-public:
-	friend class BaseState; //Oh not in the double inheritance AAAAAAAAAAAAAA
 
 };

@@ -1,14 +1,14 @@
 #include "CombatProject/Character/BaseState.h"
  
 
-void BaseState::Tick(float DeltaTime)
+void UBaseState::Tick(float DeltaTime)
 {
 }
 
-void BaseState::Enter()
+void UBaseState::Enter()
 {
 }
 
-void BaseState::Leave()
+void UBaseState::Leave()
 {
 }
