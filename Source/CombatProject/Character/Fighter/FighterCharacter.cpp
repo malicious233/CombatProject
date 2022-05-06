@@ -79,14 +79,13 @@ EState AFighterCharacter::GetState()
 	{
 		return EState::IDLE;
 	}
-	else if (ActiveState == WalkState)
+	if (ActiveState == WalkState)
 	{
 		return EState::WALKING;
 	}
-	else
-	{
-		return EState::NONE;
-	}
+
+	return EState::NONE;
+
 }
 
 
