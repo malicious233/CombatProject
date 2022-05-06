@@ -28,6 +28,11 @@ void ABaseCharacter::SetState(EState ToState)
 {
 }
 
+EState ABaseCharacter::GetState()
+{
+	return EState::NONE;
+}
+
 
 
 

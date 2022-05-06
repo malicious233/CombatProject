@@ -9,7 +9,7 @@
 #include "BaseCharacter.generated.h"
 
 
-UENUM()
+UENUM(BlueprintType)
 enum class EState : uint8
 {
 	NONE,
@@ -48,6 +48,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	//Sets state of the character via given enum.
 	virtual void SetState(EState ToState); 
+
+	UFUNCTION(BlueprintPure)
+	virtual EState GetState();
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

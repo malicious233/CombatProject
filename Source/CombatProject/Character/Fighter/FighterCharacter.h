@@ -38,6 +38,8 @@ public:
 
 	virtual void SetState(EState ToState) override;
 
+	virtual EState GetState() override;
+
 	///
 
 	///MiscFunctions///
@@ -46,6 +48,8 @@ public:
 	void HandleStopWalk(float axisValue);
 	void HandleJump();
 	///
+
+
 
 	UPROPERTY(VisibleAnywhere)
 		UStateInputBinderComponent* InputBinderComp;
