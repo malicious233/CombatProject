@@ -6,5 +6,5 @@
 
 void UFighterIdleState::InitializeState(AFighterCharacter* owner)
 {
-	owner->IdleState = this;
+	UFighterState::InitializeState(owner);
 }

@@ -13,6 +13,7 @@ UCLASS()
 class COMBATPROJECT_API UFighterWalkState : public UFighterState
 {
 	GENERATED_BODY()
-	
-	virtual void InitializeState(AFighterCharacter* owner);
+
+public:
+	virtual void InitializeState(AFighterCharacter* owner) override;
 };

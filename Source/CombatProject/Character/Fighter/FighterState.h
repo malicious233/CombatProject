@@ -24,6 +24,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	AFighterCharacter* GetFighter();
 
-	UFUNCTION()
 	virtual void InitializeState(AFighterCharacter* owner);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void InitializeStateBP(AFighterCharacter* owner);
+
+
 };

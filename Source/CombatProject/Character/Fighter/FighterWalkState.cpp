@@ -6,5 +6,5 @@
 
 void UFighterWalkState::InitializeState(AFighterCharacter* owner)
 {
-	owner->WalkState = this;
+	UFighterState::InitializeState(owner);
 }

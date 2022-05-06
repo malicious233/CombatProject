@@ -33,10 +33,10 @@ void AFighterCharacter::BeginPlay()
 
 	//Remember to both initialize and set the Fighter reference to itself... I should make this into a function.
 	IdleState = NewObject<UFighterIdleState>(this, IdleStateClass);
-	IdleState->Fighter = this;
+	IdleState->InitializeState(this);
 
 	WalkState = NewObject<UFighterWalkState>(this, WalkStateClass);
-	WalkState->Fighter = this;
+	WalkState->InitializeState(this);
 
 	ActiveState = IdleState;
 
@@ -53,7 +53,7 @@ void AFighterCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 void AFighterCharacter::SetState(EState ToState)
 {
 
-	//This bit is ugly... I should add a function in BaseState for switching state which calls leave, BP leave and so on.
+	//This bit is ugly boilerplatey... I should add a function in BaseState for switching state which calls leave, BP leave and so on.
 	switch (ToState)
 	{
 	case EState::IDLE:

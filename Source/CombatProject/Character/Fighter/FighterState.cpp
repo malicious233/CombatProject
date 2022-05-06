@@ -11,4 +11,7 @@ AFighterCharacter* UFighterState::GetFighter()
 void UFighterState::InitializeState(AFighterCharacter* owner)
 {
 	Fighter = owner;
+	InitializeStateBP(owner);
 }
+
+

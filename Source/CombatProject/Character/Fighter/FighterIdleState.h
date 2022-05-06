@@ -15,7 +15,7 @@ class COMBATPROJECT_API UFighterIdleState : public UFighterState
 	GENERATED_BODY()
 public:
 
-	virtual void InitializeState(AFighterCharacter* owner);
+	virtual void InitializeState(AFighterCharacter* owner) override;
 	virtual void Tick(float DeltaTime) override;
 	
 };

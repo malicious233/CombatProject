@@ -9,6 +9,7 @@ class UBaseState : public UObject
 	GENERATED_BODY()
 public:
 
+
 	UFUNCTION()
 		virtual void Tick(float DeltaTime);
 
