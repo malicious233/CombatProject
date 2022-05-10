@@ -13,6 +13,9 @@ void UFighterIdleState::InitializeState(AFighterCharacter* owner)
 
 void UFighterIdleState::Tick(float DeltaTime)
 {
+
+	Fighter->MoveComp->Velocity -= Fighter->MoveComp->Velocity * Fighter->MoveComp->Friction * DeltaTime;
+
 	Fighter->ActiveState->BPTick(DeltaTime);
 
 	Fighter->MoveComp->PhysicsTick(DeltaTime);

@@ -57,6 +57,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	float MaxSpeed;
 
+	UPROPERTY(EditAnywhere)
+	float Friction;
+
 
 		
 };
