@@ -84,17 +84,34 @@ void UFGMovementComponent::PhysicsTick(float DeltaTime)
 
 }
 
-void UFGMovementComponent::AddForce(const FVector& force)
+void UFGMovementComponent::AddForce(const FVector force)
 {
 	Velocity += force * GetWorld()->GetDeltaSeconds();
 }
 
-void UFGMovementComponent::AddImpulse(const FVector& impulse)
+void UFGMovementComponent::AddForceClamped(FVector force, const float maxSpeed)
+{
+	float accelDot = FVector::DotProduct(force, Velocity.GetSafeNormal());
+	if (accelDot <= 0)
+	{
+		accelDot = 0;
+	}
+	FVector accelRedirect = accelDot * Velocity.GetSafeNormal();
+
+	if (Velocity.Size() > maxSpeed)
+	{
+		force = force - accelRedirect;
+	}
+
+	AddForce(force);
+}
+
+void UFGMovementComponent::AddImpulse(const FVector impulse)
 {
 	Velocity += impulse;
 }
 
-void UFGMovementComponent::SetVelocity(const FVector& force)
+void UFGMovementComponent::SetVelocity(const FVector force)
 {
 	Velocity = force;
 }

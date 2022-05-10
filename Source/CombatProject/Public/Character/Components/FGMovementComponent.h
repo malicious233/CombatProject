@@ -28,13 +28,19 @@ public:
 	void PhysicsTick(float DeltaTime);
 
 	UFUNCTION(BlueprintCallable)
-	void AddForce(const FVector& force);
+	void AddForce(const FVector force);
+
+	/// <summary>
+	/// Accelerate up until a certain velocity
+	/// </summary>
+	UFUNCTION(BlueprintCallable)
+	void AddForceClamped(FVector force, const float maxSpeed);
 
 	UFUNCTION(BlueprintCallable)
-	void AddImpulse(const FVector& impulse);
+	void AddImpulse(const FVector impulse);
 
 	UFUNCTION(BlueprintCallable)
-	void SetVelocity(const FVector& force);
+	void SetVelocity(const FVector force);
 
 	UPROPERTY(BlueprintReadOnly)
 	bool IsGrounded;
@@ -46,7 +52,10 @@ public:
 	float Gravity;
 
 	UPROPERTY(EditAnywhere)
-	float WalkSpeed = 300.f;
+	float WalkSpeed;
+
+	UPROPERTY(EditAnywhere)
+	float MaxSpeed;
 
 
 		

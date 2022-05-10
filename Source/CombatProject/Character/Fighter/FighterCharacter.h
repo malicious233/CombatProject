@@ -69,7 +69,7 @@ public:
 		UFighterWalkState* WalkState;
 	
 
-private:
+public:
 	float InputAxis;
 
 };

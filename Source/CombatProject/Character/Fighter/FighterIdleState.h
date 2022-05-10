@@ -17,5 +17,7 @@ public:
 
 	virtual void InitializeState(AFighterCharacter* owner) override;
 	virtual void Tick(float DeltaTime) override;
+	virtual void Enter() override;
+	virtual void Leave() override;
 	
 };

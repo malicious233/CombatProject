@@ -95,15 +95,6 @@ EState AFighterCharacter::GetState()
 
 #pragma region IdleState
 
-void UFighterIdleState::Tick(float DeltaTime)
-{
-	Fighter->ActiveState->BPTick(DeltaTime);
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.f, FColor::Purple, TEXT("From C++ Wooo"));
-	
-}
-
-
-
 
 #pragma endregion
 
